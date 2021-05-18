@@ -1,0 +1,65 @@
+//AsyncCosmosClientLibrary
+
+plugins {
+	id 'org.springframework.boot' version '2.3.9.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.cosmos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('azureVersion', "3.2.0")
+}
+
+dependencies {
+
+//Swagger Dependencies
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+	
+//Azure Spring Data Cosmos	
+	// https://mvnrepository.com/artifact/com.microsoft.azure/azure-documentdb
+	implementation group: 'com.azure', name: 'azure-spring-data-cosmos', version: '3.2.0'
+
+//JUNIT	
+	testImplementation('org.springframework.boot:spring-boot-starter-test')	{
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	
+	// https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter
+	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.0'
+	
+	// https://mvnrepository.com/artifact/org.junit.platform/junit-platform-commons
+	implementation group: 'org.junit.platform', name: 'junit-platform-commons', version: '1.7.0'
+	
+//In unit testing, fetching response is throwing restClientException. So adding this dependency
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.11.4'
+
+	
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.azure.spring:azure-spring-boot-starter'
+	
+	testImplementation 'io.projectreactor:reactor-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.azure.spring:azure-spring-boot-bom:${azureVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

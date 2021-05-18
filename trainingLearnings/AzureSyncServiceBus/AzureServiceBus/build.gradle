@@ -1,0 +1,57 @@
+//AzureServiceBus
+
+plugins {
+	id 'org.springframework.boot' version '2.3.9.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.cosmos'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('azureVersion', "3.2.0")
+}
+
+dependencies {
+//Azure Service Bus	
+	// https://mvnrepository.com/artifact/com.azure/azure-messaging-servicebus
+	implementation group: 'com.azure', name: 'azure-messaging-servicebus', version: '7.1.0'
+
+//Azure cosmos DB	
+	// https://mvnrepository.com/artifact/com.microsoft.azure/azure-cosmosdb
+	implementation group: 'com.microsoft.azure', name: 'azure-cosmosdb', version: '2.6.13'
+	// https://mvnrepository.com/artifact/io.reactivex/rxjava
+	implementation group: 'io.reactivex', name: 'rxjava', version: '1.3.8'
+	
+//Swagger Dependencies
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	// https://mvnrepository.com/artifact/io.springfox/springfox-boot-starter
+	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+	
+	
+
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.azure.spring:azure-spring-boot-starter'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "com.azure.spring:azure-spring-boot-bom:${azureVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
